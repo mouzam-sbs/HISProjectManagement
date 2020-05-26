@@ -1,0 +1,107 @@
+<div class="container">
+  <br />
+  <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#myModal">
+    Add Product
+  </button>
+  <div class="form-group">
+    <div class="row">
+      <div class="col-md-8"></div>
+      <div class="col-md- pull-right">
+        <input type="text" placeholder="enter to search"
+               [(ngModel)]="search" class="form-control" />
+      </div>
+    </div>
+  </div>
+  <div class="row">
+    <table class="table table-hover">
+      <thead>
+        <tr>
+          <th scope="col">Id</th>
+          <th scope="col">Name</th>
+          <th scope="col">Description</th>
+          <th scope="col">Actions</th>
+        </tr>
+      </thead>
+      <tbody>
+
+        <tr *ngFor="let product of productList | filter:search | paginate: { itemsPerPage: 20, currentPage: p }">
+          <!--| filter:search | paginate: { itemsPerPage: 5, currentPage: p }">-->
+          <td>{{product.Id}}</td>
+          <td>{{product.Name}}</td>
+          <td>{{product.Description}}</td>
+          <td>
+
+            <span (click)="getProductbyId(product.Id)" style="cursor:pointer;text-decoration:underline" data-toggle="modal" data-target="#myModal">Edit</span> |
+            <span (click)="deleteProduct(product.Id)" style="cursor:pointer;text-decoration:underline">Delete</span>
+          </td>
+        </tr>
+
+      </tbody>
+    </table>
+    <ul class="pagination">
+      <pagination-controls (pageChange)="p = $event"></pagination-controls>
+    </ul>
+  </div>
+
+</div>
+
+<!-- The Modal -->
+<form [formGroup]="postProductForm" (ngSubmit)="onSubmit(buttonType)" novalidate>
+  <!--<form [formGroup]="postCustomerForm" (ngSubmit)="postCustomer()" novalidate>-->
+
+  <div class="modal" id="myModal">
+    <div class="modal-dialog">
+      <div class="modal-content">
+
+        <!-- Modal Header -->
+        <div class="modal-header">
+          <h4 *ngIf="!product.Id" class="modal-title">Create New Product</h4>
+          <h4 *ngIf="product.Id" class="modal-title">Update Product</h4>
+          <button type="button" class="close" data-dismiss="modal">&times;</button>
+        </div>
+
+        <!-- Modal body -->
+        <div class="modal-body">
+          <fieldset>
+            <div class="form-group">
+              <input class="form-control" placeholder="Enter Name" formControlName="Name" [(ngModel)]="product.Name">
+              <div *ngIf="Name.touched && Name.invalid" class="alert alert-danger">
+                Name is required
+              </div>
+
+            </div>
+
+            <div class="form-group">
+              <textarea class="form-control" placeholder="Enter Description" formControlName="Description" [(ngModel)]="product.Description"> </textarea>
+              <div *ngIf="Description.touched && Description.invalid" class="alert alert-danger">
+                Address is required.
+              </div>
+            </div>
+
+
+
+
+          </fieldset>
+
+        </div>
+
+        <!-- Modal footer -->
+        <div class="modal-footer">
+          <button data-dismiss="modal" *ngIf="!product.Id" type="button" [disabled]="postProductForm.invalid"
+                  (click)="onSubmit('Create')" class="btn btn-primary">
+            Create
+          </button>
+          <button data-dismiss="modal" *ngIf="product.Id" type="button" [disabled]="postProductForm.invalid"
+                  (click)="onSubmit('Update')" class="btn btn-primary">
+            Update
+          </button>
+          <!--<button class="btn btn-primary" [disabled]="postCustomerForm.invalid" type="submit">Create</button>-->
+
+          <button type="button" click="resetForm()" class="btn btn-danger" data-dismiss="modal">Close</button>
+        </div>
+
+      </div>
+    </div>
+  </div>
+
+</form>

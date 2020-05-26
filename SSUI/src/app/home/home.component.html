@@ -1,0 +1,50 @@
+<div class="text-xl-center">
+  <img style="align-content:center" src="./assets/ss.png" width="300px" />
+</div>
+  <div *ngIf="authService.isAuthenticated" class="text-center">
+    <div class="row">
+  <div style="display: block; width:400px;height:400px!important">
+    <canvas baseChart style="width:400px;height:400px!important"
+            [data]="pieChartData"
+            [labels]="pieChartLabels"
+            [chartType]="pieChartType"
+            [options]="pieChartOptions"
+            [plugins]="pieChartPlugins"
+            [legend]="pieChartLegend"></canvas>
+  </div>
+  <div style="display: block;width:400px;height:400px!important ">
+    <canvas baseChart style="width:400px;height:400px!important"
+            [datasets]="barChartData"
+            [labels]="barChartLabels"
+            [options]="barChartOptions"
+            [plugins]="barChartPlugins"
+            [legend]="barChartLegend"
+            [chartType]="barChartType"></canvas>
+  </div>
+  <div>
+    <img [src]="imageToShow" class="rounded-circle" style="width:200px;height:200px!important">
+  </div>
+</div>
+</div>
+<hr />
+<div style="font-size:18px" class="container">
+  <h2 class="text-primary">SS - Short Story</h2>
+  <p>
+    This Web-based system is designed to allow you to share any of your experiences as a short story.
+    Short Story is a web portal where a user can share their personal short stories. Admin can approve or reject the story shared by the user and in each case an email is sent out to the user. Once the story is approved, it will be available on the portal for all the users to read it.
+  </p>
+  <p>
+    This is an n-tier Single Page Application (SPA) built on .Net platform using various technologies for various layers as given below
+  </p>
+  <hr />
+  <h2 class="text-primary">Technologies</h2>
+  <ul>
+    <li><b>User Interface</b>: Angular8 and Bootstrap 4</li>
+    <li><b>Service Layer</b>: ASP.Net Core Web API</li>
+    <li><b>Business Logic Layer</b>: C#.Net Core</li>
+    <li><b>Data Access Layer</b>: Entity Framework Core Code First</li>
+    <li><b>Back End</b>: MS SQL Server 2017</li>
+    <li><b>Security</b>: Cookies and JWT</li>
+    <li><b>Tools</b>: Visual Studio 2019 and SQL Server Management Studio 2017</li>
+  </ul>
+</div>

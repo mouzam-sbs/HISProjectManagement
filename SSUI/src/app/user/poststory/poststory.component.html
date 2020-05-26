@@ -1,0 +1,83 @@
+<div id="msg" *ngIf="showSuccessMsg" class="alert alert-success">
+  <strong>Story Posted successfully!</strong>
+</div>
+<ul *ngIf="showFailureMsg" class="alert alert-danger">
+  <li *ngFor="let error of serverErrors">
+    {{error}}
+  </li>
+</ul>
+<div class="col-md-2 col-sm-1 col-lg-10">
+  <form [formGroup]="postStoryForm" (ngSubmit)="postStory()" novalidate>
+    <fieldset>
+      <legend class="text-primary">Post A Story</legend>
+      <div class="form-group">
+        <input class="form-control" placeholder="Enter Story Title" formControlName="ssTitle" [(ngModel)]="story.ssTitle">
+        <div *ngIf="ssTitle.touched && ssTitle.invalid" class="alert alert-danger">
+          Story Title is required
+        </div>
+      </div>
+      <div class="form-group">
+        <textarea class="form-control" placeholder="Enter Story Description" formControlName="ssDescription" [(ngModel)]="story.ssDescription"> </textarea>
+        <div *ngIf="ssDescription.touched && ssDescription.invalid" class="alert alert-danger">
+          Story description is required.
+        </div>
+      </div> <button class="btn btn-primary btn-lg" [disabled]="postStoryForm.invalid" type="submit">Create</button>
+    </fieldset>
+  </form>
+</div>
+<hr />
+<ul class="nav nav-tabs bg-primary">
+  <li class="nav-item bg-primary">
+    <a class="nav-link active" data-toggle="tab" href="#home">Approved</a>
+  </li>
+  <li class="nav-item bg-primary">
+    <a class="nav-link" data-toggle="tab" href="#profile">Pending</a>
+  </li>
+</ul>
+
+<div id="myTabContent" class="tab-content">
+  <div class="tab-pane fade active show" id="home">
+    <table *ngIf="approvedStories.length>0" class="table table-hover">
+      <thead>
+        <tr class="table-primary">
+          <th>Title</th>
+          <th>Story</th>
+          <th>Likes</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr *ngFor="let story of approvedStories | paginate: { itemsPerPage: 5, currentPage: p }">
+          <td>{{story.ssTitle}}</td>
+          <td>{{story.ssDescription}}</td>
+          <td>{{story.like}}</td>
+        </tr>
+      </tbody>
+    </table>
+    <ul class="pagination">
+      <pagination-controls (pageChange)="p = $event"></pagination-controls>
+    </ul>
+  </div>
+  <div class="tab-pane fade" id="profile">
+    <table *ngIf="pendingStories.length>0" class="table table-hover">
+      <thead>
+        <tr class="table-primary">
+          <th>Title</th>
+          <th>Story</th>
+          <th>Likes</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr *ngFor="let story of pendingStories | paginate: { itemsPerPage: 5, currentPage: p }">
+          <td>{{story.ssTitle}}</td>
+          <td>{{story.ssDescription}}</td>
+          <td>{{story.like}}</td>
+        </tr>
+      </tbody>
+    </table>
+    <ul class="pagination">
+      <pagination-controls (pageChange)="p = $event"></pagination-controls>
+    </ul>
+  </div>
+</div>
+
+

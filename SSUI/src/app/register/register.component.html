@@ -1,0 +1,46 @@
+<ul *ngIf="showFailureMsg" class="alert alert-danger">
+  <li *ngFor="let error of serverErrors">
+    {{error}}
+  </li>
+</ul>
+<div class="container h-100">
+  <div class="row h-100 justify-content-center align-items-center">
+    <div class="col-md-2 col-sm-1 col-lg-10">
+      <div class="card border-primary mb-6">
+        <form [formGroup]="userRegistrationForm" (ngSubmit)="register()" novalidate>
+          <div class="card-header text-white bg-primary">
+            Register Here
+          </div>
+          <div class="card-body">
+            <div class="form-group">
+              <input [ngClass]="(urf.userName.touched && urf.userName.invalid)?'form-control is-invalid':((urf.userName.touched && urf.userName.valid)?'form-control is-valid':'form-control')" formControlName="userName" placeholder="user name">
+              <div class="invalid-feedback" *ngIf="(submitted||urf.userName.touched) && urf.userName.invalid">
+                User Name is required
+              </div>
+            </div>
+            <div class="form-group">
+              <input type="email" [ngClass]="(urf.email.touched && urf.email.invalid)?'form-control is-invalid':((urf.email.touched && urf.email.valid)?'form-control is-valid':'form-control')" formControlName="email" placeholder="user email" />
+              <div *ngIf="urf.email.touched && urf.email.invalid" class="invalid-feedback">
+                Email is invalid
+              </div>
+            </div>
+            <div class="form-group">
+              <input type="password" class="form-control" formControlName="password" placeholder="password" />
+            </div>
+            <div class="form-group">
+              <input type="password" class="form-control" formControlName="confirmPassword" placeholder="confirm password" />
+            </div>
+            <div class="form-group">
+              <input type="text" class="form-control" onfocus='this.type="date"' onblur='this.type="text"' formControlName="dob" placeholder="date of birth" />
+            </div>
+            <div class="form-group">
+              <label>Upload Your Profile Pic (200x200)px</label>
+              <input type="file" class="form-control-file" (change)="upload($event.target.files)" name="profilePic">
+            </div>
+            <button class="btn btn-primary btn-lg" [disabled]="userRegistrationForm.invalid" type="submit">Create</button>
+          </div>
+        </form>
+      </div>
+    </div>
+  </div>
+</div>
